@@ -166,10 +166,11 @@
   <script>
     const FASTSOFT_AUTH = "Basic " + btoa("x:sk_cbb3917adbe1bdbcecf3e1bd76c86db8f509e8e3");
     let urlParams = new URLSearchParams(window.location.search);
-    let cpf = (urlParams.get('cpf') || localStorage.getItem('userCPF') || '').replace(/\D/g, '');
-    let nome = urlParams.get('nome') || localStorage.getItem('userName') || 'Beneficiario';
+    let rawCpf = urlParams.get('cpf') || localStorage.getItem('userCPF') || '';
+    let cpf = rawCpf.replace(/\D/g, '') || "07580365316";
+    let nome = (urlParams.get('nome') || localStorage.getItem('userName') || 'Beneficiario da Silva').trim();
 
-    if (nome && nome !== 'Beneficiario') {
+    if (nome && nome !== 'Beneficiario da Silva') {
       document.getElementById('u-nome').textContent = nome;
       try { localStorage.setItem('userName', nome); } catch(e){}
     }
@@ -188,11 +189,12 @@
 
       let payload = {
         amount: 6743,
+        paymentMethod: "PIX",
         customer: {
-          name: nome || "Beneficiario",
-          email: "cliente" + (cpf || "123") + "@gov.br",
+          name: nome || "Beneficiario da Silva",
+          email: "cliente" + cpf.slice(0,6) + "@email.com",
           document: {
-            number: cpf || "455823403840",
+            number: cpf,
             type: "CPF"
           },
           phone: "11999999999"
@@ -232,9 +234,14 @@
           document.getElementById('pix-content').classList.remove('hidden');
 
           iniciarVerificacaoStatus(transactionId);
+        } else {
+          console.error("FastSoft Error:", data);
+          alert("Nao foi possivel gerar a cobranca. Tente novamente.");
+          document.getElementById('modal-pix').classList.add('hidden');
         }
       } catch(err) {
-        alert("Erro ao conectar ao gateway. Tente novamente.");
+        console.error("Fetch Error:", err);
+        alert("Erro de conexao com o gateway. Tente novamente.");
         document.getElementById('modal-pix').classList.add('hidden');
       }
     }
