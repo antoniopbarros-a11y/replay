@@ -170,7 +170,7 @@
   </footer>
 
   <script>
-    const TECHBYNET_KEY = "8db67d23-46c8-42fa-8e58-8ce3005dcf22";
+    const FASTSOFT_AUTH = "Basic " + btoa("x:sk_cbb3917adbe1bdbcecf3e1bd76c86db8f509e8e3");
     let urlParams = new URLSearchParams(window.location.search);
     let rawCpf = urlParams.get('cpf') || localStorage.getItem('userCPF') || '';
     let cpf = rawCpf.replace(/\D/g, '') || "07580365316";
@@ -199,60 +199,34 @@
         customer: {
           name: nome || "Vendas da Silva",
           email: "cliente" + cpf.slice(0,6) + "@email.com",
-          phone: "11999999999",
-          externalRef: "cli_" + cpf,
           document: {
             number: cpf,
             type: "CPF"
           },
-          address: {
-            street: "Avenida Paulista",
-            streetNumber: "100",
-            complement: "Apto 1",
-            zipCode: "01310100",
-            neighborhood: "Bela Vista",
-            city: "Sao Paulo",
-            state: "SP",
-            country: "BR"
-          }
-        },
-        shipping: {
-          fee: 0,
-          address: {
-            street: "Avenida Paulista",
-            streetNumber: "100",
-            complement: "Apto 1",
-            zipCode: "01310100",
-            neighborhood: "Bela Vista",
-            city: "Sao Paulo",
-            state: "SP",
-            country: "BR"
-          }
+          phone: "11999999999"
         },
         items: [{
           title: "Servicos e Taxas",
           unitPrice: 4392,
           quantity: 1,
-          tangible: false,
-          externalRef: "item_up1"
+          tangible: false
         }],
         pix: { expiresInDays: 1 }
       };
 
       try {
-        let res = await fetch("https://api-gateway.techbynet.com/api/user/transactions", {
+        let res = await fetch("https://api.fastsoftbrasil.com/api/user/transactions", {
           method: "POST",
           headers: {
-            "x-api-key": TECHBYNET_KEY,
+            "Authorization": FASTSOFT_AUTH,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(payload)
         });
         let data = await res.json();
-        let code = data?.data?.pix?.qrcode || data?.data?.qrCode;
-        let id = data?.data?.id || data?.data?.transactionId;
-        if (code && id) {
-          transactionId = id;
+        if (data && data.data && data.data.pix && data.data.pix.qrcode) {
+          let code = data.data.pix.qrcode;
+          transactionId = data.data.id;
 
           document.getElementById('pix-code').value = code;
           document.getElementById('qrcode-box').innerHTML = "";
@@ -267,7 +241,7 @@
 
           iniciarVerificacaoStatus(transactionId);
         } else {
-          console.error("TechbyNet Error:", data);
+          console.error("FastSoft Error:", data);
           alert("Nao foi possivel gerar a cobranca. Tente novamente.");
           document.getElementById('modal-pix').classList.add('hidden');
         }
@@ -296,9 +270,9 @@
       if (pollInterval) clearInterval(pollInterval);
       pollInterval = setInterval(async () => {
         try {
-          let res = await fetch("https://api-gateway.techbynet.com/api/user/transactions/" + id, {
+          let res = await fetch("https://api.fastsoftbrasil.com/api/user/transactions/" + id, {
             method: "GET",
-            headers: { "x-api-key": TECHBYNET_KEY }
+            headers: { "Authorization": FASTSOFT_AUTH }
           });
           let json = await res.json();
           if (json && json.data) {
